@@ -14,7 +14,6 @@ export default function ProfileEditForm({ userId, currentUsername }: ProfileEdit
   const [username, setUsername] = useState(currentUsername)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClient()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,6 +33,8 @@ export default function ProfileEditForm({ userId, currentUsername }: ProfileEdit
     setError(null)
 
     try {
+      const supabase = createClient()
+      
       // 사용자명 중복 체크
       const { data: existingProfile } = await supabase
         .from('profiles')

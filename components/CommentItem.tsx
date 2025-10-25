@@ -17,13 +17,13 @@ export default function CommentItem({ comment, currentUserId }: CommentItemProps
   const [editContent, setEditContent] = useState(comment.content)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   const isAuthor = currentUserId === comment.user_id
 
   const handleUpdate = async () => {
     setLoading(true)
     try {
+      const supabase = createClient()
       const { error } = await supabase
         .from('comments')
         .update({ content: editContent })
@@ -45,6 +45,7 @@ export default function CommentItem({ comment, currentUserId }: CommentItemProps
 
     setLoading(true)
     try {
+      const supabase = createClient()
       const { error } = await supabase
         .from('comments')
         .delete()

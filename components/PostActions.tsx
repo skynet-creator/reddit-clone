@@ -13,13 +13,13 @@ export default function PostActions({ postId }: PostActionsProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   const handleDelete = async () => {
     if (!confirm('정말 삭제하시겠습니까?')) return
 
     setDeleting(true)
     try {
+      const supabase = createClient()
       const { error } = await supabase
         .from('posts')
         .delete()

@@ -14,12 +14,12 @@ export default function VoteButtons({ postId, initialVoteCount, userVote: initia
   const [voteCount, setVoteCount] = useState(initialVoteCount)
   const [userVote, setUserVote] = useState<number | null>(initialUserVote || null)
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
   const router = useRouter()
 
   useEffect(() => {
     // 현재 사용자의 투표 상태 가져오기
     const fetchUserVote = async () => {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
@@ -36,11 +36,12 @@ export default function VoteButtons({ postId, initialVoteCount, userVote: initia
     }
 
     fetchUserVote()
-  }, [postId, supabase])
+  }, [postId])
 
   const handleVote = async (voteType: number) => {
     setLoading(true)
     try {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
         router.push('/login')

@@ -12,13 +12,13 @@ export default function CommentForm({ postId }: CommentFormProps) {
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 

@@ -13,11 +13,11 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        const supabase = createClient()
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) {
           router.push('/login')
@@ -48,7 +48,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
     }
 
     fetchPost()
-  }, [id, router, supabase])
+  }, [id, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,6 +56,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
     setSubmitting(true)
 
     try {
+      const supabase = createClient()
       const { error } = await supabase
         .from('posts')
         .update({ title, content })
