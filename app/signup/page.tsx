@@ -12,7 +12,6 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const supabase = createClient()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,6 +19,8 @@ export default function SignupPage() {
     setLoading(true)
 
     try {
+      const supabase = createClient()
+      
       // 사용자명 중복 확인
       const { data: existingUser } = await supabase
         .from('profiles')
